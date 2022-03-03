@@ -6,11 +6,6 @@ pipeline {
         }
     }
     stages {
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests -Denforcer.skip=true clean package'
-            }
-        }
         stage('Test') {
             steps {
                 sh 'mvn -Denforcer.skip=true test'
@@ -21,10 +16,11 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Build') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sh 'mvn -B -DskipTests -Denforcer.skip=true clean package'
             }
         }
+        
     }
 }
